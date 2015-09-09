@@ -77,6 +77,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -1713,12 +1714,14 @@ public class PlaybackService extends Service implements IVLCVout.Callback {
     public void moveItem(int positionStart, int positionEnd) {
         mMediaList.move(positionStart, positionEnd);
         PlaybackService.this.saveMediaList();
+        Log.d(TAG, "moveItem "+positionStart+" -> "+positionEnd);
     }
 
     @MainThread
     public void remove(int position) {
         mMediaList.remove(position);
         onMediaListChanged();
+        Log.d(TAG, "remove "+position);
     }
 
     @MainThread

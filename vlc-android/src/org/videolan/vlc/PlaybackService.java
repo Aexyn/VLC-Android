@@ -55,6 +55,7 @@ import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.NotificationCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -1561,10 +1562,17 @@ public class PlaybackService extends Service implements IVLCVout.Callback {
     }
 
     @MainThread
+    public void loadUri(Uri uri) {
+        String path = uri.getPath();
+        if (TextUtils.equals(uri.getScheme(), "content")) {
+            path = "file://"+Util.getPathFromURI(uri);
+        }
+        loadLocation(path);
+    }
+
+    @MainThread
     public void loadLocation(String mediaPath) {
-        ArrayList <String> arrayList = new ArrayList<String>();
-        arrayList.add(mediaPath);
-        loadLocations(arrayList, 0);
+        loadLocations(Collections.singletonList(mediaPath), 0);
     }
 
     @MainThread
